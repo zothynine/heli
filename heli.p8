@@ -4,7 +4,11 @@ __lua__
 heli = {
 	x = 64,
 	y = 64,
-	sprite = 0
+	sprite = 0,
+	animate = function(self)
+		self.sprite += 1
+		if self.sprite == 4 then self.sprite = 0 end
+	end
 }
 
 blasts = {}
@@ -19,20 +23,13 @@ function _update()
 	if heli.y < 0 then heli.y = 0 end
 	if heli.y > 120 then heli.y = 120 end
 	
-	if btn(4) then add(blasts,1) end 
+	--if btn(4) then add(blasts,1) end 
 end
 
 function _draw()
 	rectfill(0,0,127,127,5)
-	--circfill(x, y, 7, 3)
-	sprite_animate()
-	print(blasts, 5,5,6)
+	heli:animate()
 	spr(heli.sprite, heli.x, heli.y)
-end
-
-function sprite_animate()
-	heli.sprite += 1
-	if heli.sprite == 4 then heli.sprite = 0 end
 end
 __gfx__
 00007000007040000000400000004070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
