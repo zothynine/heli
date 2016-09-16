@@ -1,20 +1,23 @@
 pico-8 cartridge // http://www.pico-8.com
 version 8
 __lua__
-x = 64
-y = 64
-spri = 0
+heli = {
+	x = 64,
+	y = 64,
+	sprite = 0
+}
+
 blasts = {}
 
 function _update()
-	if btn(0) then x -=1 end
-	if btn(1) then x +=1 end
-	if btn(2) then y -=1 end
-	if btn(3) then y +=1 end
-	if x < -2 then x = -2 end
-	if x > 121 then x = 121 end
-	if y < 0 then y = 0 end
-	if y > 120 then y = 120 end
+	if btn(0) then heli.x -=1 end
+	if btn(1) then heli.x +=1 end
+	if btn(2) then heli.y -=1 end
+	if btn(3) then heli.y +=1 end
+	if heli.x < -2 then heli.x = -2 end
+	if heli.x > 121 then heli.x = 121 end
+	if heli.y < 0 then heli.y = 0 end
+	if heli.y > 120 then heli.y = 120 end
 	
 	if btn(4) then add(blasts,1) end 
 end
@@ -24,19 +27,12 @@ function _draw()
 	--circfill(x, y, 7, 3)
 	sprite_animate()
 	print(blasts, 5,5,6)
-	--if blasts != nil then
-		--foreach(blasts, draw_blast(v))
-	--end
-	spr(spri, x, y)
-end
-
-function draw_blast(v)
-	print(v,5,5,6)
+	spr(heli.sprite, heli.x, heli.y)
 end
 
 function sprite_animate()
-	spri += 1
-	if spri == 4 then spri = 0 end
+	heli.sprite += 1
+	if heli.sprite == 4 then heli.sprite = 0 end
 end
 __gfx__
 00007000007040000000400000004070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
