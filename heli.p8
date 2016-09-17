@@ -13,7 +13,30 @@ heli = {
 
 blasts = {}
 
-function _update()
+--start screen
+function update_start()
+	cls()
+	if btn(4) then
+		start_game()
+	end
+end
+
+function draw_start()
+	rectfill(0,0,127,127,5)
+	print("press z to start",30,30,12)
+end
+
+--game
+function start_game()
+	cls()
+	heli.x = 64
+	heli.y = 64
+	blasts = {}
+	_update = update_game
+	_draw = draw_game
+end
+
+function update_game()
 	if btn(0) then heli.x -=1 end
 	if btn(1) then heli.x +=1 end
 	if btn(2) then heli.y -=1 end
@@ -33,7 +56,7 @@ function _update()
 	end
 end
 
-function _draw()
+function draw_game()
 	rectfill(0,0,127,127,5)
 	heli:animate()
 	spr(heli.sprite, heli.x, heli.y)
@@ -59,6 +82,8 @@ function make_blast()
 end
 
 function _init()
+_update = update_start
+_draw = draw_start
 	sfx(1,1)
 end
 __gfx__
