@@ -48,7 +48,7 @@ function make_blast()
 		x = heli.x+1,
 		y = heli.y,
 		update = function(self)
-			self.y -= 1
+			self.y -= 2
 		end,
 		draw = function(self)
 			spr(4, self.x, self.y)
