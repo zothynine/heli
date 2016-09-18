@@ -8,10 +8,9 @@ heli = {
 	animate = function(self)
 		self.sprite += 1
 		if self.sprite == 2 then self.sprite = 0 end
-	end
+	end,
+	blasts = {}
 }
-
-blasts = {}
 
 --start screen
 function update_start()
@@ -31,7 +30,7 @@ function start_game()
 	cls()
 	heli.x = 64
 	heli.y = 64
-	blasts = {}
+	heli.blasts = {}
 	enemies = {}
 	_update = update_game
 	_draw = draw_game
@@ -49,9 +48,9 @@ function update_game()
 	
 	if btnp(4) then make_blast() end
 	
-	for blast in all(blasts) do
+	for blast in all(heli.blasts) do
 		if blast.y < 1 then
-			del(blasts,blast)
+			del(heli.blasts,blast)
 		end
 		blast:update()
 	end
@@ -63,7 +62,7 @@ function draw_game()
 	heli:animate()
 	spr(heli.sprite, heli.x, heli.y)
 	
-	for blast in all(blasts) do
+	for blast in all(heli.blasts) do
 		blast:draw()
 	end
 end
@@ -81,7 +80,7 @@ function make_blast()
 		end
 	}
 	
-	add(blasts, blast)
+	add(heli.blasts, blast)
 end
 
 function _init()
