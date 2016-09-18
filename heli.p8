@@ -46,7 +46,7 @@ function update_game()
 	if heli.y < 0 then heli.y = 0 end
 	if heli.y > 120 then heli.y = 120 end
 	
-	if btnp(4) then make_blast() end
+	if btnp(4) then make_heli_blast() end
 	
 	for blast in all(heli.blasts) do
 		if blast.y < 1 then
@@ -67,7 +67,7 @@ function draw_game()
 	end
 end
 
-function make_blast()
+function make_heli_blast()
 	sfx(0)
 	blast = {
 		x = heli.x+1,
