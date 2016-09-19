@@ -1,6 +1,8 @@
 pico-8 cartridge // http://www.pico-8.com
 version 8
 __lua__
+timer = 0;
+
 heli = {
 	x = 64,
 	y = 64,
@@ -17,6 +19,7 @@ enemies = {}
 --start screen
 function update_start()
 	cls()
+	timer = 0;
 	if btn(4) then
 		start_game()
 	end
@@ -67,11 +70,12 @@ function update_game()
 	if #enemies < 1 then
 		make_enemy()
 	end
+	timer += 1
 end
 
 function draw_game()
-	print("foo",5,5,6)
 	rectfill(0,0,127,127,5)
+	print(timer,5,5,6)
 	heli:animate()
 	spr(heli.sprite, heli.x, heli.y)
 	
