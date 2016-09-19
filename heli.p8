@@ -30,6 +30,7 @@ end
 --game
 function start_game()
 	cls()
+	sfx(1,1)
 	heli.x = 64
 	heli.y = 64
 	heli.blasts = {}
@@ -117,7 +118,6 @@ end
 function _init()
 _update = update_start
 _draw = draw_start
-	sfx(1,1)
 end
 __gfx__
 00007000007040700007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
