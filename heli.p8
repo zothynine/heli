@@ -7,6 +7,7 @@ heli = {
 	x = 64,
 	y = 64,
 	sprite = 0,
+	crash = 0,
 	animate = function(self)
 		self.sprite += 1
 		if self.sprite == 2 then self.sprite = 0 end
@@ -36,6 +37,7 @@ function start_game()
 	sfx(1,1)
 	heli.x = 64
 	heli.y = 64
+	heli.crash = 0
 	heli.blasts = {}
 	enemies = {}
 	_update = update_game
@@ -70,6 +72,10 @@ function update_game()
 	if #enemies < 1 then
 		make_enemy()
 	end
+	
+	if heli.crash == 1 then
+		show_game_over()
+	end
 	timer += 1
 end
 
@@ -85,6 +91,7 @@ function draw_game()
 	
 	for enemy in all(enemies) do
 		enemy:animate()
+		enemy:check_collision(heli)
 		spr(enemy.sprite,enemy.x,enemy.y)
 	end
 end
@@ -108,15 +115,40 @@ end
 function make_enemy()
 	enemy = {
 		x = 64,
-		y = -8,
+		y = 0,
 		sprite = 16,
 		animate = function(self)
 			self.sprite += 1
-			self.y += 1
 			if self.sprite == 18 then self.sprite = 16 end
+		end,
+		check_collision = function(self,opp)
+			local xdiff = self.x - opp.x
+			local ydiff = opp.y - self.y
+
+			if (xdiff < 5 and xdiff > -5) then
+				if ydiff < 8 then
+					opp.crash = 1
+				end
+			end
 		end
 	}
 	add(enemies, enemy)
+end
+
+function show_game_over()
+		_update = update_game_over
+		_draw = draw_game_over
+end
+
+--game over
+function update_game_over()
+	cls()
+	if btn(4) then start_game()  end
+end
+
+function draw_game_over()
+	print("game over", 30, 30, 9)
+	print("press z to start",30,60,12)
 end
 
 function _init()
