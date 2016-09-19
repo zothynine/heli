@@ -136,6 +136,7 @@ function make_enemy()
 end
 
 function show_game_over()
+		sfx(-2,1)
 		_update = update_game_over
 		_draw = draw_game_over
 end
