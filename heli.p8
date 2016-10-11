@@ -15,10 +15,13 @@ heli = {
 	x = 64,
 	y = 64,
 	sprite = 0,
+	shadow = 32,
 	crash = 0,
 	animate = function(self)
 		self.sprite += 1
+		self.shadow += 1
 		if self.sprite == 2 then self.sprite = 0 end
+		if self.shadow == 34 then self.shadow =32 end
 	end,
 	blasts = {}
 }
@@ -113,6 +116,10 @@ function draw_game()
  camera()
 	print(timers.global,5,5,6)
 	heli:animate()
+	pal(4,5)
+	pal(7,5)
+	spr(heli.sprite, heli.x + 5, heli.y + 6)
+	pal()
 	spr(heli.sprite, heli.x, heli.y)
 	
 	for blast in all(heli.blasts) do
