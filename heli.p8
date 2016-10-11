@@ -7,10 +7,8 @@ timers = {
 camx = 0
 camy = 0
 shadows = {
-	start_txt = {
-		x = 0,
-		y = 0
-	}
+	starttxt_x = 0,
+	starttxt_y = 0
 }
 
 heli = {
@@ -32,18 +30,18 @@ function update_start()
 	cls()
 	timers.global += 1
 	if timers.global % 12 == 0 then
-		if shadows.start_txt.x < 8 then
-			shadows.start_txt.x += 1
-			shadows.start_txt.y = shadows.start_txt.x
+		if shadows.starttxt_x < 8 then
+			shadows.starttxt_x += 1
+			shadows.starttxt_y = shadows.starttxt_x
 		else
-			shadows.start_txt.x -= 1
-			shadows.start_txt.y = shadows.start_txt.x
+			shadows.starttxt_x -= 1
+			shadows.starttxt_y = shadows.starttxt_x
 		end
 	end
 	
 	shadow = {
-		x = 50 + shadows.start_txt.x,
-		y = 30 + shadows.start_txt.y
+		x = 50 + shadows.starttxt_x,
+		y = 30 + shadows.starttxt_y
 	}
 	
 	if btn(4) then
@@ -110,10 +108,9 @@ function update_game()
 end
 
 function draw_game()
-	--rectfill(0,0,127,127,5)
-    cls()
-    camera()
-    map(0,0,0,0,16,16)
+ cls()
+	rectfill(0,0,128,128,3)
+ camera()
 	print(timers.global,5,5,6)
 	heli:animate()
 	spr(heli.sprite, heli.x, heli.y)
