@@ -1,9 +1,17 @@
 pico-8 cartridge // http://www.pico-8.com
 version 8
 __lua__
-timer = 0
+timers = {
+	global = 0
+}
 camx = 0
 camy = 0
+shadows = {
+	start_txt = {
+		x = 0,
+		y = 0
+	}
+}
 
 heli = {
 	x = 64,
@@ -22,7 +30,22 @@ enemies = {}
 --start screen
 function update_start()
 	cls()
-	timer = 0;
+	timers.global += 1
+	if timers.global % 12 == 0 then
+		if shadows.start_txt.x < 8 then
+			shadows.start_txt.x += 1
+			shadows.start_txt.y = shadows.start_txt.x
+		else
+			shadows.start_txt.x -= 1
+			shadows.start_txt.y = shadows.start_txt.x
+		end
+	end
+	
+	shadow = {
+		x = 50 + shadows.start_txt.x,
+		y = 30 + shadows.start_txt.y
+	}
+	
 	if btn(4) then
 		start_game()
 	end
@@ -30,13 +53,18 @@ end
 
 function draw_start()
  cls()
-	print("press z to start",30,30,12)
+	rectfill(0,0,128,128,3)	
+	print(timers.global,1,1,0)
+	print("h.e.l.i",shadow.x,shadow.y,5)
+	print("h.e.l.i",50,30,4)
+	print("press z to start",30,60,7)
 end
 
 --game
 function start_game()
 	cls()
-    camera()
+	timers.global = 0
+ camera()
 	sfx(1,1)
 	music(0,100,2)
 	heli.x = 64
@@ -78,7 +106,7 @@ function update_game()
 	if heli.crash == 1 then
 		show_game_over()
 	end
-	timer += 1
+	timers.global += 1
 end
 
 function draw_game()
@@ -86,7 +114,7 @@ function draw_game()
     cls()
     camera()
     map(0,0,0,0,16,16)
-	print(timer,5,5,6)
+	print(timers.global,5,5,6)
 	heli:animate()
 	spr(heli.sprite, heli.x, heli.y)
 	
