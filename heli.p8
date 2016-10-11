@@ -163,10 +163,10 @@ function make_enemy()
 	enemy = {
 		x = 64,
 		y = 0,
-		sprite = 16,
+		sprite = 0,
 		animate = function(self)
 			self.sprite += 1
-			if self.sprite == 18 then self.sprite = 16 end
+			if self.sprite == 2 then self.sprite = 0 end
 		end,
 		check_collision = function(self,opp)
 			local xdiff = self.x - opp.x
