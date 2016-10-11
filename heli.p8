@@ -4,6 +4,7 @@ __lua__
 timers = {
 	global = 0
 }
+
 camx = 0
 camy = 0
 shadows = {
@@ -17,6 +18,7 @@ heli = {
 	sprite = 0,
 	shadow_spr = 32,
 	crash = 0,
+	score = 0,
 	animate = function(self)
 		self.sprite += 1
 		self.shadow_spr += 1
@@ -54,8 +56,7 @@ end
 
 function draw_start()
  cls()
-	rectfill(0,0,128,128,3)	
-	print(timers.global,1,1,0)
+	rectfill(0,0,128,128,3)
 	print("h.e.l.i",shadow.x,shadow.y,5)
 	print("h.e.l.i",50,30,4)
 	print("press z to start",30,60,7)
@@ -75,8 +76,6 @@ function start_game()
 	enemies = {}
 	_update = update_game
 	_draw = draw_game
-	
-	make_enemy()
 end
 
 function update_game()
@@ -107,14 +106,17 @@ function update_game()
 	if heli.crash == 1 then
 		show_game_over()
 	end
-	timers.global += 1
+	timers.global += 1	
+	if count(enemies) < 4 then
+		make_enemy()
+	end
 end
 
 function draw_game()
  cls()
 	rectfill(0,0,128,128,3)
  camera()
-	print(timers.global,5,5,6)
+	print("score: "..heli.score,5,5,6)
 	heli:animate()
 	pal(4,5)
 	pal(7,5)
@@ -149,6 +151,7 @@ function make_heli_blast()
 							and xdiff > -4
 							and ydiff < 1 then
 					sfx(3)
+					heli.score += enemy.speed
 					del(enemies,enemy)
 				end
 			end
@@ -163,12 +166,14 @@ end
 
 function make_enemy()
 	enemy = {
-		x = 64,
+		x = flr(rnd(128)),
 		y = 0,
+		speed = flr(rnd(2)) + 1,
 		sprite = 0,
 		animate = function(self)
 			self.sprite += 1
 			if self.sprite == 2 then self.sprite = 0 end
+			self.y += self.speed
 		end,
 		check_collision = function(self,opp)
 			local xdiff = self.x - opp.x
