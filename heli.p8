@@ -30,6 +30,10 @@ heli = {
 
 enemies = {}
 
+function ceil(num)
+	return -flr(-num)
+end
+
 --start screen
 function update_start()
 	cls()
@@ -107,7 +111,7 @@ function update_game()
 		show_game_over()
 	end
 	timers.global += 1	
-	if count(enemies) < 4 then
+	if count(enemies) < 3 then
 		make_enemy()
 	end
 end
@@ -151,7 +155,7 @@ function make_heli_blast()
 							and xdiff > -4
 							and ydiff < 1 then
 					sfx(3)
-					heli.score += enemy.speed
+					heli.score += ceil(enemy.speed)
 					del(enemies,enemy)
 				end
 			end
@@ -166,9 +170,9 @@ end
 
 function make_enemy()
 	enemy = {
-		x = flr(rnd(128)),
+		x = flr(rnd(16)) * 8,
 		y = 0,
-		speed = flr(rnd(2)) + 1,
+		speed = 0.25 + rnd(2),
 		sprite = 0,
 		animate = function(self)
 			self.sprite += 1
@@ -179,8 +183,8 @@ function make_enemy()
 			local xdiff = self.x - opp.x
 			local ydiff = opp.y - self.y
 
-			if (xdiff < 5 and xdiff > -5) then
-				if ydiff < 8 then
+			if xdiff < 5 and xdiff > -5 then
+				if ydiff < 8 and ydiff > -8 then
 					opp.crash = 1
 				end
 			end
