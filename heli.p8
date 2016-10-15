@@ -122,10 +122,12 @@ function draw_game()
  camera()
 	print("score: "..heli.score,5,5,6)
 	heli:animate()
+	--shadow
 	pal(4,5)
 	pal(7,5)
 	spr(heli.sprite, heli.x + 5, heli.y + 6)
 	pal()
+	--heli
 	spr(heli.sprite, heli.x, heli.y)
 	
 	for blast in all(heli.blasts) do
@@ -135,6 +137,12 @@ function draw_game()
 	for enemy in all(enemies) do
 		enemy:animate()
 		enemy:check_collision(heli)
+		--shadow
+		pal(4,5)
+		pal(7,5)
+		spr(enemy.sprite, enemy.x + 5, enemy.y + 6,1,1,false,true)
+		pal()
+		--enemy heli
 		pal(4,2)
 		spr(enemy.sprite,enemy.x,enemy.y,1,1,false,true)
 		pal()
@@ -174,9 +182,12 @@ function make_enemy()
 		y = 0,
 		speed = 0.25 + rnd(2),
 		sprite = 0,
+		shadow_spr = 32,
 		animate = function(self)
 			self.sprite += 1
+			self.shadow_spr += 1
 			if self.sprite == 2 then self.sprite = 0 end
+			if self.shadow_spr == 34 then self.shadow_spr = 32 end
 			self.y += self.speed
 		end,
 		check_collision = function(self,opp)
