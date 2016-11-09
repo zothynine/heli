@@ -53,7 +53,7 @@ function update_start()
 		y = 30 + shadows.starttxt_y
 	}
 	
-	if btn(4) then
+	if btn(5) then
 		start_game()
 	end
 end
@@ -63,7 +63,7 @@ function draw_start()
 	rectfill(0,0,128,128,3)
 	print("h.e.l.i",shadow.x,shadow.y,5)
 	print("h.e.l.i",50,30,4)
-	print("press z to start",30,60,7)
+	print("[x] start [z] fire",30,60,7)
 end
 
 --game
@@ -212,12 +212,12 @@ end
 
 --game over
 function update_game_over()
-	if btn(4) then start_game()  end
+	if btn(5) then start_game()  end
 end
 
 function draw_game_over()
 	print("game over", 45, 50, 9)
-	print("press z to restart",30,58,12)
+	print("press x to restart",30,58,12)
 end
 
 function _init()
