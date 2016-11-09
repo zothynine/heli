@@ -72,7 +72,7 @@ function start_game()
 	timers.global = 0
  camera()
 	sfx(1,1)
-	music(0,100,2)
+	music(0,100,10)
 	heli.x = 64
 	heli.y = 64
 	heli.crash = 0
