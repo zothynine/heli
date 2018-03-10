@@ -1,4 +1,3 @@
-# PICO-8 CARTS FTW!
+# HELI FOR PICO-8
 
-## Handling Branches
-- To start a new game create an orphan branch for it e.g. `git checkout -b --orphan <branch>`
+A game similar to Xenon, Blue Max or 1942.
